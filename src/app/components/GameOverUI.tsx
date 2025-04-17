@@ -49,7 +49,7 @@ export class GameOverUI extends React.Component<GameOverUI.Props, GameOverUI.Sta
             {
               this.isNewRecord() && <img
                 style={styles.newRecord}
-                src={`${S3_HOST}/images/game_result_new.png`}
+                src={require('../../assets/images/game_result_new.png')}
               />
             }
           </div>
@@ -69,7 +69,7 @@ export class GameOverUI extends React.Component<GameOverUI.Props, GameOverUI.Sta
           >
               <img
                 style={styles.image}
-                src={`${S3_HOST}/images/main_btn_twitter.png`}
+                src={require('../../assets/images/main_btn_twitter.png')}
               />
           </Clipboard>
         </div>
@@ -85,7 +85,7 @@ export class GameOverUI extends React.Component<GameOverUI.Props, GameOverUI.Sta
           >
             <img
               style={styles.image}
-              src={`${S3_HOST}/images/pause_btn_retry.png`}
+              src={require('../../assets/images/pause_btn_retry.png')}
             />
           </div>
         </div>

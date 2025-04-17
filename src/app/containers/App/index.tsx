@@ -118,7 +118,7 @@ export class App extends React.Component<App.Props, App.State> {
           ref={ref => this.nextCoins = ref}
           coins={this.props.game.candidates}
           savedCoin={this.props.game.savedCoin}
-          image={`${S3_HOST}/images/pause_btn_retry.png`}
+          image={require('../../../assets/images/pause_btn_retry.png')}
           onSaveClick={() => {
             if (this.nextCoins != null) {
               const isInitHoldAnimation = this.props.game.savedCoin === 0;

@@ -1,7 +1,7 @@
 import { Storage } from 'app/utils/storage';
 import { CoinValue, Position, NextCoinType } from 'app/models';
 
-export const S3_HOST: string = 'https://s3.ap-northeast-2.amazonaws.com/make5000';
+export const S3_HOST: string = '';
 
 export class CONST {
   public static WIDTH: number = 480;

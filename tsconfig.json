@@ -16,7 +16,8 @@
     "baseUrl": "src",
     "paths": {
       "app/*": ["./app/*"]
-    }
+    },
+    "skipLibCheck": true
   },
   "exclude": ["dist", "build", "node_modules"]
 }

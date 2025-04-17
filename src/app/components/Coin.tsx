@@ -39,7 +39,7 @@ export class Coin extends React.Component<Coin.Props, Coin.State> {
           props.value !== 0 &&
             <img
               style={styles.coinImg()}
-              src={`${S3_HOST}/images/game_coin_${props.value}.png`}
+              src={require(`../../assets/images/game_coin_${props.value}.png`)}
             />
         }
       </div>

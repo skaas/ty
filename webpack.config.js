@@ -37,13 +37,13 @@ module.exports = {
       // .ts, .tsx
       {
         test: /\.tsx?$/,
-        use: [
-          isProduction && {
-            loader: 'babel-loader',
-            options: { plugins: ['react-hot-loader/babel'] }
-          },
-          'ts-loader'
-        ].filter(Boolean)
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true
+          }
+        },
+        exclude: /node_modules/
       },
       // css
       {

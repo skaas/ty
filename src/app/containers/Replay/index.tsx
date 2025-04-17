@@ -91,8 +91,8 @@ export class App extends React.Component<App.Props, App.State> {
           coins={this.props.game.candidates}
           savedCoin={this.props.game.savedCoin}
           image={this.state.autoPlay ?
-            `${S3_HOST}/images/game_btn_pause.png` :
-            `${S3_HOST}/images/game_btn_play.png`}
+            require('../../../assets/images/game_btn_pause.png') :
+            require('../../../assets/images/game_btn_play.png')}
           onSaveClick={() => {}}
           onImageClick={() => { this.toggleAutoPlay(); }}
         />

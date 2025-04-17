@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --mode development --hot --progress --color --port 3000 --open --host 0.0.0.0",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider DISABLE_TYPESCRIPT=true webpack-dev-server --mode development --hot --progress --color --port 3000 --open --host 0.0.0.0",
     "build": "webpack -p --progress --colors",
     "lint": "tslint --project tsconfig.json 'src/**/*.ts'"
   },
@@ -73,5 +73,6 @@
     "tslint-config-airbnb": "^5.9.2",
     "tslint-react": "^3.6.0",
     "uuid": "^3.3.2"
-  }
+  },
+  "proxy": "https://s3.ap-northeast-2.amazonaws.com"
 }

@@ -55,7 +55,7 @@ export class NextCoins extends React.Component<NextCoins.Props, NextCoins.State>
                     visibility: this.props.savedCoin === value ? 'visible' : 'hidden',
                     marginLeft: -this.state.holdSavedMarginLeft,
                   }}
-                  src={`${S3_HOST}/images/game_coin_${value}.png`}
+                  src={require(`../../assets/images/game_coin_${value}.png`)}
                 />
               );
             })
@@ -74,7 +74,7 @@ export class NextCoins extends React.Component<NextCoins.Props, NextCoins.State>
                     visibility: this.props.coins[0] === value ? 'visible' : 'hidden',
                     marginLeft: this.state.moveMarginLeft + this.state.holdNextMarginLeft,
                   }}
-                  src={`${S3_HOST}/images/game_coin_${value}.png`}
+                  src={require(`../../assets/images/game_coin_${value}.png`)}
                 />
               );
             })
@@ -91,7 +91,7 @@ export class NextCoins extends React.Component<NextCoins.Props, NextCoins.State>
                     visibility: this.props.coins[1] === value ? 'visible' : 'hidden',
                     marginLeft: this.state.moveMarginLeft,
                   }}
-                  src={`${S3_HOST}/images/game_coin_${value}.png`}
+                  src={require(`../../assets/images/game_coin_${value}.png`)}
                 />
               );
             })
@@ -108,7 +108,7 @@ export class NextCoins extends React.Component<NextCoins.Props, NextCoins.State>
                     visibility: this.props.coins[2] === value ? 'visible' : 'hidden',
                     transform: `scale(${this.state.scale})`
                   }}
-                  src={`${S3_HOST}/images/game_coin_${value}.png`}
+                  src={require(`../../assets/images/game_coin_${value}.png`)}
                 />
               );
             })
@@ -225,7 +225,7 @@ const styles = {
     alignItems: 'center',
     width: '212px',
     height: '100px',
-    backgroundImage: `url(${S3_HOST}/images/game_box_next.png)`,
+    backgroundImage: `url(${require('../../assets/images/game_box_next.png')})`,
   } as React.CSSProperties,
   nextCoinDiv: {
     width: `${CONST.WIDTH}px`,
@@ -253,7 +253,7 @@ const styles = {
     pointerEvents: 'auto',
     userSelect: 'element',
     cursor: 'pointer',
-    backgroundImage: `url(${S3_HOST}/images/game_box_hold.png)`,
+    backgroundImage: `url(${require('../../assets/images/game_box_hold.png')})`,
     touchAction: 'manipulation',
   } as React.CSSProperties,
   holdCoin: {

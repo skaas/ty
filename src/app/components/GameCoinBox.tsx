@@ -47,7 +47,7 @@ export class GameCoinBox extends React.Component<GameCoinBox.Props, GameCoinBox.
       >
         <Img
           style={styles.boxImg()}
-          src={`${S3_HOST}/images/game_coinbox_${props.direction}.png`}
+          src={require(`../../assets/images/game_coinbox_${props.direction}.png`)}
           onClick={() => this.props.onClick()}
         />
       </div>
