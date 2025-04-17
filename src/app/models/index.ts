@@ -5,7 +5,6 @@ export module CoinValue {
 
   export function fromString(value: string): CoinValue {
     switch (value) {
-    case '0':     return 0;
     case '1':     return 1;
     case '5':     return 5;
     case '10':    return 10;
@@ -17,9 +16,8 @@ export module CoinValue {
     }
   }
 
-  export function isCoinValue(value: number): boolean {
+  export function validValue(value: number): boolean {
     switch (value) {
-    case 0:
     case 1:
     case 5:
     case 10:
@@ -81,3 +79,11 @@ export interface DialogState {
 export type NextCoinType = 1 | 2;
 
 export type Bonus = { pos: Position, value: number, count: number };
+
+export interface AIThoughtEntry {
+  turn: number;
+  coinValue: CoinValue;
+  weights: { [key in CoinValue]?: number };
+  reason: string;
+  timestamp: number;
+}

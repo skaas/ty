@@ -36,6 +36,7 @@ const defaultState: GameState = {
   isReplay: false,
   totalMove: 0,
   gameOver: false,
+  aiThoughts: [],
 };
 
 type GameActionPlayload = AddCoinPayload
@@ -121,12 +122,20 @@ export const gameReducer = handleActions<GameState, GameActionPlayload>(
       if (payload.value) {
         candidates[2] = payload.value;
       } else {
-        candidates[2] = NextCoinLogic.getNextCoin(state.coins, state.lastPos);
+        const nextCoinResult = NextCoinLogic.getNextCoin(state.coins, state.lastPos, state.totalMove);
+        candidates[2] = nextCoinResult.coin;
+        payload.thought = nextCoinResult.thought;
       }
 
+      // aiThoughts가 없으면 빈 배열로 초기화
+      const aiThoughts = state.aiThoughts || [];
+      
       const postState: GameState = Object.assign({}, {
         ...state,
         candidates,
+        aiThoughts: payload.thought 
+          ? [...aiThoughts, payload.thought].slice(-10) // 최근 10개만 유지
+          : aiThoughts
       });
 
       if (!state.isReplay) {
@@ -139,6 +148,7 @@ export const gameReducer = handleActions<GameState, GameActionPlayload>(
     [GameActions.Type.SAVE_COIN]: (state, action) => {
       const candidates = _.clone(state.candidates);
       let savedCoin: CoinValue = 0;
+      let thought = undefined;
 
       if (state.savedCoin === 0) {
         if (state.isReplay) {
@@ -146,9 +156,10 @@ export const gameReducer = handleActions<GameState, GameActionPlayload>(
           candidates.splice(0, 1);
         } else {
           savedCoin = candidates[0];
-          const newCandidate = NextCoinLogic.getNextCoin(state.coins, state.lastPos);
+          const nextCoinResult = NextCoinLogic.getNextCoin(state.coins, state.lastPos, state.totalMove);
           candidates.splice(0, 1);
-          candidates.push(newCandidate);
+          candidates.push(nextCoinResult.coin);
+          thought = nextCoinResult.thought;
         }
       } else {
         const saved = state.savedCoin;
@@ -156,10 +167,16 @@ export const gameReducer = handleActions<GameState, GameActionPlayload>(
         candidates[0] = saved;
       }
 
+      // aiThoughts가 없으면 빈 배열로 초기화
+      const aiThoughts = state.aiThoughts || [];
+
       const postState: GameState = Object.assign({}, {
         ...state,
         savedCoin,
         candidates,
+        aiThoughts: thought 
+          ? [...aiThoughts, thought].slice(-10) // 최근 10개만 유지
+          : aiThoughts
       });
 
       if (!state.isReplay) {
@@ -177,6 +194,9 @@ export const gameReducer = handleActions<GameState, GameActionPlayload>(
       const saved = Storage.getSavedGame();
       if (saved != null && !payload.isReplay) {
         if (saved.coins.length === CONST.GAME_SIZE) {
+          if (!saved.aiThoughts) {
+            saved.aiThoughts = [];
+          }
           return saved;
         }
       }
@@ -218,6 +238,7 @@ export const gameReducer = handleActions<GameState, GameActionPlayload>(
         isReplay: payload.isReplay,
         totalMove: 0,
         gameOver: false,
+        aiThoughts: [],
       }) as GameState;
 
       if (!state.isReplay) {
@@ -229,7 +250,8 @@ export const gameReducer = handleActions<GameState, GameActionPlayload>(
     [GameActions.Type.RESET_GAME]: (state) => {
       Storage.setBestScore(state.score);
       Storage.resetSavedGame();
-      return Object.assign({}, defaultState);
+      const newState = Object.assign({}, defaultState, { aiThoughts: [] });
+      return newState;
     },
     [GameActions.Type.GAME_OVER]: (state, action) => {
       const postState = Object.assign({}, {

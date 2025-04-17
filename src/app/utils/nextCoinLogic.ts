@@ -1,16 +1,28 @@
 import * as _ from 'lodash';
 
-import { CoinValue, Position } from 'app/models';
+import { CoinValue, Position, AIThoughtEntry } from 'app/models';
 import { getSameAdjacentCoinsWithValue, tryMerge, randomSelection } from 'app/utils';
 import { CONST } from 'app/utils/constants';
 
 export namespace NextCoinLogic {
-  export function getNextCoin(coins: CoinValue[][], curPos: Position): CoinValue {
+  export function getNextCoin(coins: CoinValue[][], curPos: Position, turn: number = 0): { 
+    coin: CoinValue, 
+    thought: AIThoughtEntry 
+  } {
     switch (CONST.NEXT_COIN_TYPE) {
     case 1:
-      return getNextCoin1(coins, curPos);
+      return getNextCoin1WithThought(coins, curPos, turn);
     default:
-      return getNextCoin2(coins, curPos);
+      return { 
+        coin: getNextCoin2(coins, curPos), 
+        thought: {
+          turn,
+          coinValue: 5,
+          weights: { 5: 1.0 },
+          reason: "기본 동전 제공",
+          timestamp: Date.now()
+        }
+      };
     }
   }
 }
@@ -19,17 +31,51 @@ function getNextCoin2(coins: CoinValue[][], curPos: Position): CoinValue {
   return 5;
 }
 
-function getNextCoin1(coins: CoinValue[][], curPos: Position): CoinValue {
+function getNextCoin1WithThought(coins: CoinValue[][], curPos: Position, turn: number): { 
+  coin: CoinValue, 
+  thought: AIThoughtEntry 
+} {
   let candidates = getCandidates(coins, curPos, 1);
   let maxWeight = getMaxWeight(candidates);
+  let reason = "";
+
+  // 이유 결정
+  const coinValue = maxWeight.maxValue;
+  const mergeOpportunities = countMergeOpportunities(coins, curPos, coinValue);
+  if (mergeOpportunities > 0) {
+    reason = `${mergeOpportunities}개 동전 병합 가능성`;
+  } else if (isStrategicPosition(curPos)) {
+    reason = "전략적 위치 확보";
+  } else {
+    reason = "균형잡힌 분포 유지";
+  }
 
   if (maxWeight.hasMax) {
-    return maxWeight.maxValue;
+    return {
+      coin: maxWeight.maxValue,
+      thought: {
+        turn,
+        coinValue: maxWeight.maxValue,
+        weights: { ...candidates },
+        reason,
+        timestamp: Date.now()
+      }
+    };
   }
 
   candidates = getCandidates(coins, curPos, 0.5);
   maxWeight = getMaxWeight(candidates);
-  return maxWeight.maxValue;
+  
+  return {
+    coin: maxWeight.maxValue,
+    thought: {
+      turn,
+      coinValue: maxWeight.maxValue,
+      weights: { ...candidates },
+      reason: "차선책 선택",
+      timestamp: Date.now()
+    }
+  };
 }
 
 function getMaxWeight(candidates: { [key: number]: number })
@@ -97,19 +143,19 @@ function getCandidates(coins: CoinValue[][], curPos: Position, filterWeight: num
         const sameCoins = getSameAdjacentCoinsWithValue(targetPos, value, coinsCopy);
         const mergedValue = tryMerge(value, sameCoins.length);
 
-        // 합칠 수 있으면 +10
+        // 합칠 수 있으면 보너스 부여
         if (mergedValue !== value) {
-          candidates[value] = candidates[value] + 10 * weight;
-        }
-
-        // 4개면 +8
-        if (sameCoins.length === 4) {
-          candidates[value] = candidates[value] + 8 * weight;
-        }
-
-        // 3개면 +6
-        if (sameCoins.length === 3) {
-          candidates[value] = candidates[value] + 6 * weight;
+          // 병합 결과와 원래 값의 비율 계산
+          const valueMultiplier = mergedValue / value;
+          
+          // 병합으로 인한 가치 증가에 비례하는 보너스
+          const mergeBonus = Math.min(15, 8 * valueMultiplier);
+          
+          // 인접한 동전 수에 따른 추가 보너스
+          const adjacencyBonus = sameCoins.length >= 3 ? (sameCoins.length - 1) * 2 : 0;
+          
+          // 최종 병합 가치 계산
+          candidates[value] = candidates[value] + (mergeBonus + adjacencyBonus) * weight;
         }
       }
 
@@ -119,9 +165,19 @@ function getCandidates(coins: CoinValue[][], curPos: Position, filterWeight: num
         const sameCoins = getSameAdjacentCoinsWithValue(targetPos, value, coinsCopy);
         const mergedValue = tryMerge(value, sameCoins.length);
 
-        // 합칠 수 있으면 +8
+        // 합칠 수 있으면 보너스 부여
         if (mergedValue !== value) {
-          candidates[value] = candidates[value] + 8 * weight;
+          // 병합 결과와 원래 값의 비율 계산
+          const valueMultiplier = mergedValue / value;
+          
+          // 병합으로 인한 가치 증가에 비례하는 보너스
+          const mergeBonus = Math.min(12, 6 * valueMultiplier);
+          
+          // 인접한 동전 수에 따른 추가 보너스
+          const adjacencyBonus = sameCoins.length >= 3 ? (sameCoins.length - 1) * 1.5 : 0;
+          
+          // 최종 병합 가치 계산
+          candidates[value] = candidates[value] + (mergeBonus + adjacencyBonus) * weight;
         }
       }
     }
@@ -295,3 +351,48 @@ const CASE3: Paths[] = [
     ],
   },
 ];
+
+// 병합 기회 계산 헬퍼 함수
+function countMergeOpportunities(coins: CoinValue[][], curPos: Position, value: CoinValue): number {
+  let count = 0;
+  
+  // 인접한 위치들 확인
+  const directions = [
+    {row: -1, col: 0}, // 위
+    {row: 1, col: 0},  // 아래
+    {row: 0, col: -1}, // 왼쪽
+    {row: 0, col: 1}   // 오른쪽
+  ];
+  
+  for (const dir of directions) {
+    const row = curPos.row + dir.row;
+    const col = curPos.col + dir.col;
+    
+    // 범위 체크
+    if (row < 0 || row >= CONST.GAME_SIZE || col < 0 || col >= CONST.GAME_SIZE) {
+      continue;
+    }
+    
+    // 빈 공간인지 확인
+    if (coins[row][col] === 0) {
+      const pos = { row, col };
+      const coinsCopy = _.map(coins, _.clone);
+      const sameCoins = getSameAdjacentCoinsWithValue(pos, value, coinsCopy);
+      if (sameCoins.length >= 2) {
+        count++;
+      }
+    }
+  }
+  
+  return count;
+}
+
+// 전략적 위치 확인 헬퍼 함수
+function isStrategicPosition(pos: Position): boolean {
+  // 중앙에 가까운지 등을 확인
+  const centerRow = Math.floor(CONST.GAME_SIZE / 2);
+  const centerCol = Math.floor(CONST.GAME_SIZE / 2);
+  const distanceFromCenter = Math.abs(pos.row - centerRow) + Math.abs(pos.col - centerCol);
+  
+  return distanceFromCenter <= 2;
+}

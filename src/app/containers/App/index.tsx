@@ -7,6 +7,7 @@ import { RouteComponentProps } from 'react-router';
 import { RootState } from 'app/reducers';
 
 import { GameBoard, NextCoins, GameUI, Dialog, GameOverUI } from 'app/components';
+import { AIThoughtHistory } from 'app/components/AIThoughtHistory';
 import { GameState } from 'app/reducers/state';
 import { DialogState, Bonus } from 'app/models';
 import { GameActions, DialogActions } from 'app/actions';
@@ -32,6 +33,7 @@ export namespace App {
   }
   export interface State {
     gameOver: boolean;
+    showAIThoughts: boolean;
   }
 }
 
@@ -63,7 +65,8 @@ export class App extends React.Component<App.Props, App.State> {
     super(props, context);
 
     this.state = {
-      gameOver: false
+      gameOver: false,
+      showAIThoughts: false
     };
   }
 
@@ -71,20 +74,20 @@ export class App extends React.Component<App.Props, App.State> {
     const params = qs.parse(this.props.location.search);
     if (params.size != null || params.preset != null || params.pos != null || params.type != null) {
       try {
-        const size = parseInt(params.size, 10);
+        const size = parseInt(params.size as string, 10);
         CONST.setGameSize(size);
         this.props.actions.resetGame();
       } catch {}
 
       try {
-        const preset = JSON.parse(params.preset);
-        const pos = JSON.parse(params.pos);
+        const preset = JSON.parse(params.preset as string);
+        const pos = JSON.parse(params.pos as string);
         CONST.setGamePreset(preset, pos);
         this.props.actions.resetGame();
       } catch {}
 
       try {
-        const type = JSON.parse(params.type);
+        const type = JSON.parse(params.type as string);
         CONST.setNextCoinType(type);
         this.props.actions.resetGame();
       } catch {}
@@ -153,6 +156,16 @@ export class App extends React.Component<App.Props, App.State> {
           }}
         />
         <BonusBoard ref={ref => this.bonusBoard = ref}/>
+        <AIThoughtHistory
+          thoughts={this.props.game.aiThoughts}
+          visible={this.state.showAIThoughts}
+        />
+        <button 
+          style={styles.aiThoughtToggle}
+          onClick={() => this.setState({ showAIThoughts: !this.state.showAIThoughts })}
+        >
+          {this.state.showAIThoughts ? 'AI 생각 숨기기' : 'AI 생각 보기'}
+        </button>
         <Dialog
           dialog={this.props.dialog}
         />
@@ -170,7 +183,8 @@ export class App extends React.Component<App.Props, App.State> {
               this.bonusBoard.clearBoard();
             }
             this.setState({
-              gameOver: false
+              gameOver: false,
+              showAIThoughts: this.state.showAIThoughts
             });
             ga.onGameStart();
           }}
@@ -274,6 +288,7 @@ export class App extends React.Component<App.Props, App.State> {
       }
       this.setState({
         gameOver: true,
+        showAIThoughts: this.state.showAIThoughts
       });
       return;
     }
@@ -387,5 +402,16 @@ const styles = {
   } as React.CSSProperties,
   inputLabel: {
     width: '120px',
-  } as React.CSSProperties
+  } as React.CSSProperties,
+  aiThoughtToggle: {
+    position: 'absolute',
+    right: '20px',
+    top: '200px',
+    padding: '8px 12px',
+    background: '#3f9cba',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  } as React.CSSProperties,
 };

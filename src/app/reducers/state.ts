@@ -1,5 +1,5 @@
 import { RouterState } from 'react-router-redux';
-import { CoinValue, Position, DialogState } from 'app/models';
+import { CoinValue, Position, DialogState, AIThoughtEntry } from 'app/models';
 
 export interface RootState {
   router: RouterState;
@@ -18,4 +18,5 @@ export interface GameState {
   isReplay: boolean;
   totalMove: number;
   gameOver: boolean;
+  aiThoughts: AIThoughtEntry[];
 }

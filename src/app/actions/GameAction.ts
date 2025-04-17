@@ -1,5 +1,5 @@
 import { createAction } from 'redux-actions';
-import { CoinValue, Position, Bonus } from 'app/models';
+import { CoinValue, Position, Bonus, AIThoughtEntry } from 'app/models';
 
 export namespace GameActions {
   export enum Type {
@@ -40,6 +40,7 @@ export interface MergeCoinPayload {
 
 export interface SetNextCoinPayLoad {
   value?: CoinValue;
+  thought?: AIThoughtEntry;
 }
 
 export interface AddBonusPayload {
