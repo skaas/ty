@@ -31,32 +31,49 @@ function getNextCoin2(coins: CoinValue[][], curPos: Position): CoinValue {
   return 5;
 }
 
+function generateThoughtReason(
+  coins: CoinValue[][], 
+  curPos: Position, 
+  coinValue: CoinValue, 
+  candidates: { [key: number]: number }
+): string {
+  // 병합 가능성 체크
+  const mergeOpportunities = countMergeOpportunities(coins, curPos, coinValue);
+  if (mergeOpportunities > 0) {
+    return `${mergeOpportunities}개 동전 병합 가능성`;
+  }
+  
+  // 전략적 위치 체크
+  if (isStrategicPosition(curPos)) {
+    return "전략적 위치 확보";
+  }
+  
+  // 가중치가 낮으면 차선책
+  const values = Object.keys(candidates).map(key => candidates[Number(key)]);
+  const maxWeight = Math.max(...values);
+  if (maxWeight < 5) {
+    return "차선책 선택";
+  }
+  
+  // 균형 유지 케이스
+  return "균형잡힌 분포 유지";
+}
+
 function getNextCoin1WithThought(coins: CoinValue[][], curPos: Position, turn: number): { 
   coin: CoinValue, 
   thought: AIThoughtEntry 
 } {
   let candidates = getCandidates(coins, curPos, 1);
   let maxWeight = getMaxWeight(candidates);
-  let reason = "";
-
-  // 이유 결정
-  const coinValue = maxWeight.maxValue;
-  const mergeOpportunities = countMergeOpportunities(coins, curPos, coinValue);
-  if (mergeOpportunities > 0) {
-    reason = `${mergeOpportunities}개 동전 병합 가능성`;
-  } else if (isStrategicPosition(curPos)) {
-    reason = "전략적 위치 확보";
-  } else {
-    reason = "균형잡힌 분포 유지";
-  }
 
   if (maxWeight.hasMax) {
+    const reason = generateThoughtReason(coins, curPos, maxWeight.maxValue, candidates);
     return {
       coin: maxWeight.maxValue,
       thought: {
         turn,
         coinValue: maxWeight.maxValue,
-        weights: { ...candidates },
+        weights: {}, // 빈 객체로 전달하여 가중치 숨기기
         reason,
         timestamp: Date.now()
       }
@@ -71,7 +88,7 @@ function getNextCoin1WithThought(coins: CoinValue[][], curPos: Position, turn: n
     thought: {
       turn,
       coinValue: maxWeight.maxValue,
-      weights: { ...candidates },
+      weights: {}, // 빈 객체로 전달하여 가중치 숨기기
       reason: "차선책 선택",
       timestamp: Date.now()
     }

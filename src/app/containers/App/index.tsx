@@ -164,7 +164,7 @@ export class App extends React.Component<App.Props, App.State> {
           style={styles.aiThoughtToggle}
           onClick={() => this.setState({ showAIThoughts: !this.state.showAIThoughts })}
         >
-          {this.state.showAIThoughts ? 'AI 생각 숨기기' : 'AI 생각 보기'}
+          {this.state.showAIThoughts ? 'AI 생각 숨기기' : 'AI 생각 살펴보기'}
         </button>
         <Dialog
           dialog={this.props.dialog}
@@ -407,11 +407,15 @@ const styles = {
     position: 'absolute',
     right: '20px',
     top: '200px',
-    padding: '8px 12px',
+    padding: '10px 15px',
     background: '#3f9cba',
     color: 'white',
     border: 'none',
     borderRadius: '5px',
     cursor: 'pointer',
+    fontWeight: 'bold',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+    transition: 'all 0.2s ease',
+    fontSize: '14px',
   } as React.CSSProperties,
 };
