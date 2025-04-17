@@ -8,6 +8,7 @@ import { RootState } from 'app/reducers';
 
 import { GameBoard, NextCoins, GameUI, Dialog, GameOverUI } from 'app/components';
 import { AIThoughtHistory } from 'app/components/AIThoughtHistory';
+import { AIThoughtPanel } from 'app/components/AIThoughtPanel';
 import { GameState } from 'app/reducers/state';
 import { DialogState, Bonus } from 'app/models';
 import { GameActions, DialogActions } from 'app/actions';
@@ -155,17 +156,31 @@ export class App extends React.Component<App.Props, App.State> {
             }
           }}
         />
-        <BonusBoard ref={ref => this.bonusBoard = ref}/>
-        <AIThoughtHistory
-          thoughts={this.props.game.aiThoughts}
-          visible={this.state.showAIThoughts}
+        
+        {/* 게임 보드 바로 아래에 AI 생각 패널 배치 */}
+        <AIThoughtPanel
+          currentThought={this.props.game.aiThoughts.length > 0 
+            ? this.props.game.aiThoughts[this.props.game.aiThoughts.length - 1] 
+            : null}
         />
+        
+        <BonusBoard ref={ref => this.bonusBoard = ref}/>
+        
+        {/* AI 사고 히스토리는 토글 상태에 따라 표시 */}
+        {this.state.showAIThoughts && (
+          <AIThoughtHistory
+            thoughts={this.props.game.aiThoughts}
+            visible={true}
+          />
+        )}
+        
         <button 
           style={styles.aiThoughtToggle}
           onClick={() => this.setState({ showAIThoughts: !this.state.showAIThoughts })}
         >
-          {this.state.showAIThoughts ? 'AI 생각 숨기기' : 'AI 생각 살펴보기'}
+          {this.state.showAIThoughts ? 'AI 생각 히스토리 숨기기' : 'AI 생각 히스토리 보기'}
         </button>
+        
         <Dialog
           dialog={this.props.dialog}
         />
@@ -392,6 +407,8 @@ const styles = {
     width: `${CONST.WIDTH}px`,
     margin: '0 auto',
     padding: '20px',
+    paddingBottom: '30px', // 하단 여백 증가
+    position: 'relative',
   } as React.CSSProperties,
   coinRow: {
     display: 'block',
