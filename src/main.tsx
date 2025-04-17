@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import { createBrowserHistory } from 'history';
+import { Router } from 'react-router';
 import { configureStore } from 'app/store';
 import { App } from './app';
 import { initGA } from 'app/utils/ga';
+import { createBrowserHistory } from 'history';
 
 // prepare debug options
 if (process.env.NODE_ENV !== 'production') {
@@ -15,17 +15,26 @@ if (process.env.NODE_ENV !== 'production') {
   };
 }
 
-// prepare store
+// prepare store and history
 const history = createBrowserHistory();
 const store = configureStore(history);
 
 initGA();
 
+// Create a class-based Provider to avoid the warning
+class Root extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>
+    );
+  }
+}
+
 ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <App />
-    </ConnectedRouter>
-  </Provider>,
+  <Root />,
   document.getElementById('root')
 );

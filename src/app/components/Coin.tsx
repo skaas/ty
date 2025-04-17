@@ -1,7 +1,8 @@
 import * as React from 'react';
 
 import { CoinValue } from 'app/models';
-import { CONST, S3_HOST } from 'app/utils';
+import { CONST } from 'app/utils';
+import { getCoinImage } from 'app/constants/images';
 
 export namespace Coin {
   export interface Props {
@@ -39,7 +40,7 @@ export class Coin extends React.Component<Coin.Props, Coin.State> {
           props.value !== 0 &&
             <img
               style={styles.coinImg()}
-              src={require(`../../assets/images/game_coin_${props.value}.png`)}
+              src={getCoinImage(props.value)}
             />
         }
       </div>

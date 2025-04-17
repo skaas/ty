@@ -114,7 +114,7 @@ module.exports = {
     })
   ],
   devServer: {
-    contentBase: sourcePath,
+    contentBase: [sourcePath, path.join(__dirname, 'public')],
     hot: true,
     inline: true,
     historyApiFallback: {

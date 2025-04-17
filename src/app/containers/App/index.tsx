@@ -20,6 +20,7 @@ import {
   mergePoint,
   S3_HOST,
 } from 'app/utils';
+import { IMAGES } from 'app/constants/images';
 import * as ga from 'app/utils/ga';
 import { BonusBoard } from 'app/components/BonusBoard';
 
@@ -118,7 +119,7 @@ export class App extends React.Component<App.Props, App.State> {
           ref={ref => this.nextCoins = ref}
           coins={this.props.game.candidates}
           savedCoin={this.props.game.savedCoin}
-          image={require('../../../assets/images/pause_btn_retry.png')}
+          image={IMAGES.MOUSE_BTN_RETRY}
           onSaveClick={() => {
             if (this.nextCoins != null) {
               const isInitHoldAnimation = this.props.game.savedCoin === 0;

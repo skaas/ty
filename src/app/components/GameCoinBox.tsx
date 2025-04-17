@@ -1,7 +1,8 @@
 import * as React from 'react';
 
 import { Directions } from 'app/models';
-import { CONST, S3_HOST } from 'app/utils';
+import { CONST } from 'app/utils';
+import { IMAGES } from 'app/constants/images';
 
 const Img = require('react-image').default;
 
@@ -37,6 +38,8 @@ export class GameCoinBox extends React.Component<GameCoinBox.Props, GameCoinBox.
 
   render(): JSX.Element {
     const props = this.props;
+    const imagePath = this.getImagePath(props.direction);
+    
     return (
       <div
         style={{
@@ -47,11 +50,21 @@ export class GameCoinBox extends React.Component<GameCoinBox.Props, GameCoinBox.
       >
         <Img
           style={styles.boxImg()}
-          src={require(`../../assets/images/game_coinbox_${props.direction}.png`)}
+          src={imagePath}
           onClick={() => this.props.onClick()}
         />
       </div>
     );
+  }
+
+  private getImagePath(direction: Directions): string {
+    switch (direction) {
+      case 'up': return IMAGES.GAME_COINBOX_UP;
+      case 'down': return IMAGES.GAME_COINBOX_DOWN;
+      case 'left': return IMAGES.GAME_COINBOX_LEFT;
+      case 'right': return IMAGES.GAME_COINBOX_RIGHT;
+      default: return '';
+    }
   }
 
   public setStyle(value: React.CSSProperties): void {

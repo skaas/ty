@@ -1,31 +1,44 @@
-import { Store, createStore, AnyAction, Reducer, applyMiddleware, Middleware } from 'redux';
+import { Store, createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import { History } from 'history';
+import { routerMiddleware } from 'react-router-redux';
 
-import { RootState, rootReducer } from 'app/reducers';
+import { rootReducer } from 'app/reducers';
 import { storageMiddleware } from 'app/middleware';
 
-export function configureStore(history: History, initialState?: RootState): Store<RootState> {
-  const middlewares: Middleware[] = [];
-  middlewares.push(storageMiddleware);
+export function configureStore(history: History): Store<any> {
+  // Create middlewares
+  const middlewares: any[] = [
+    storageMiddleware
+  ];
 
+  // Add router middleware (if available)
+  try {
+    const routerMid = routerMiddleware(history);
+    if (routerMid) {
+      middlewares.push(routerMid);
+    }
+  } catch (error) {
+    console.warn('Could not add router middleware:', error);
+  }
+
+  // Add logger in development
   if (process.env.NODE_ENV !== 'production') {
     middlewares.push(createLogger({
-      predicate: () => {
-        return (window as any).debugAction;
-      }
+      predicate: () => (window as any).debugAction
     }));
   }
 
-  const middleware = applyMiddleware(...middlewares);
+  // Create store
+  const store = createStore(
+    rootReducer,
+    applyMiddleware(...middlewares)
+  );
 
-  const store = createStore(rootReducer as Reducer<RootState, AnyAction>,
-                            initialState as RootState,
-                            middleware) as Store<RootState>;
-
+  // Enable Webpack hot module replacement for reducers
   if (module.hot) {
     module.hot.accept('app/reducers', () => {
-      const nextReducer = require('app/reducers') as Reducer<RootState, AnyAction>;
+      const nextReducer = require('app/reducers').rootReducer;
       store.replaceReducer(nextReducer);
     });
   }

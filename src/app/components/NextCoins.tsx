@@ -2,8 +2,21 @@ import * as React from 'react';
 import * as style from './styles.css';
 
 import { CoinValue } from 'app/models';
-import { CONST, S3_HOST } from 'app/utils';
+import { CONST } from 'app/utils';
 import { AnimationLoop } from 'app/utils/animation';
+import { IMAGES, getCoinImage } from 'app/constants/images';
+
+// 색상 폴백
+const COIN_COLORS: { [key: number]: string } = {
+  1: '#F9D923',
+  5: '#36AE7C',
+  10: '#EB5353',
+  50: '#187498',
+  100: '#7952B3',
+  500: '#FF6B6B',
+  1000: '#6A67CE',
+  0: '#CCCCCC' // 기본값 추가
+};
 
 export namespace NextCoins {
   export interface Props {
@@ -39,10 +52,16 @@ export class NextCoins extends React.Component<NextCoins.Props, NextCoins.State>
   }
 
   render(): JSX.Element {
+    console.log('NextCoins render - coins:', this.props.coins);
+    
     return (
       <div style={styles.container}>
         <div
-          style={styles.hold}
+          style={{
+            ...styles.hold,
+            backgroundImage: `url(${IMAGES.GAME_BOX_HOLD})`,
+            backgroundColor: '#58B19F',
+          }}
           onClick={() => { this.props.onSaveClick(); }}
         >
           {
@@ -55,13 +74,29 @@ export class NextCoins extends React.Component<NextCoins.Props, NextCoins.State>
                     visibility: this.props.savedCoin === value ? 'visible' : 'hidden',
                     marginLeft: -this.state.holdSavedMarginLeft,
                   }}
-                  src={require(`../../assets/images/game_coin_${value}.png`)}
+                  src={getCoinImage(value)}
+                  onError={(e: any) => {
+                    // 이미지 로드 실패 시 대체 텍스트 보이기
+                    e.target.style.backgroundColor = COIN_COLORS[value] || '#F9D923';
+                    e.target.style.display = 'flex';
+                    e.target.style.justifyContent = 'center';
+                    e.target.style.alignItems = 'center';
+                    e.target.style.color = '#fff';
+                    e.target.style.fontWeight = 'bold';
+                    e.target.style.fontSize = '18px';
+                    e.target.innerText = value.toString();
+                    e.target.style.borderRadius = '50%';
+                  }}
                 />
               );
             })
           }
         </div>
-        <div style={styles.nextCoins}>
+        <div style={{
+          ...styles.nextCoins,
+          backgroundImage: `url(${IMAGES.GAME_BOX_NEXT})`,
+          backgroundColor: '#58B19F',
+        }}>
           <div style={styles.nextCoinDiv}>
           {
             CoinValue.VALUES.map((value) => {
@@ -74,7 +109,19 @@ export class NextCoins extends React.Component<NextCoins.Props, NextCoins.State>
                     visibility: this.props.coins[0] === value ? 'visible' : 'hidden',
                     marginLeft: this.state.moveMarginLeft + this.state.holdNextMarginLeft,
                   }}
-                  src={require(`../../assets/images/game_coin_${value}.png`)}
+                  src={getCoinImage(value)}
+                  onError={(e: any) => {
+                    // 이미지 로드 실패 시 대체 텍스트 보이기
+                    e.target.style.backgroundColor = COIN_COLORS[value] || '#F9D923';
+                    e.target.style.display = 'flex';
+                    e.target.style.justifyContent = 'center';
+                    e.target.style.alignItems = 'center';
+                    e.target.style.color = '#fff';
+                    e.target.style.fontWeight = 'bold';
+                    e.target.style.fontSize = '18px';
+                    e.target.innerText = value.toString();
+                    e.target.style.borderRadius = '50%';
+                  }}
                 />
               );
             })
@@ -91,7 +138,19 @@ export class NextCoins extends React.Component<NextCoins.Props, NextCoins.State>
                     visibility: this.props.coins[1] === value ? 'visible' : 'hidden',
                     marginLeft: this.state.moveMarginLeft,
                   }}
-                  src={require(`../../assets/images/game_coin_${value}.png`)}
+                  src={getCoinImage(value)}
+                  onError={(e: any) => {
+                    // 이미지 로드 실패 시 대체 텍스트 보이기
+                    e.target.style.backgroundColor = COIN_COLORS[value] || '#F9D923';
+                    e.target.style.display = 'flex';
+                    e.target.style.justifyContent = 'center';
+                    e.target.style.alignItems = 'center';
+                    e.target.style.color = '#fff';
+                    e.target.style.fontWeight = 'bold';
+                    e.target.style.fontSize = '18px';
+                    e.target.innerText = value.toString();
+                    e.target.style.borderRadius = '50%';
+                  }}
                 />
               );
             })
@@ -108,7 +167,19 @@ export class NextCoins extends React.Component<NextCoins.Props, NextCoins.State>
                     visibility: this.props.coins[2] === value ? 'visible' : 'hidden',
                     transform: `scale(${this.state.scale})`
                   }}
-                  src={require(`../../assets/images/game_coin_${value}.png`)}
+                  src={getCoinImage(value)}
+                  onError={(e: any) => {
+                    // 이미지 로드 실패 시 대체 텍스트 보이기
+                    e.target.style.backgroundColor = COIN_COLORS[value] || '#F9D923';
+                    e.target.style.display = 'flex';
+                    e.target.style.justifyContent = 'center';
+                    e.target.style.alignItems = 'center';
+                    e.target.style.color = '#fff';
+                    e.target.style.fontWeight = 'bold';
+                    e.target.style.fontSize = '18px';
+                    e.target.innerText = value.toString();
+                    e.target.style.borderRadius = '50%';
+                  }}
                 />
               );
             })
@@ -122,6 +193,17 @@ export class NextCoins extends React.Component<NextCoins.Props, NextCoins.State>
           <img
             style={styles.retryImg}
             src={this.props.image}
+            onError={(e: any) => {
+              // 이미지 로드 실패 시 대체 텍스트 보이기
+              e.target.style.backgroundColor = '#EB5353';
+              e.target.style.display = 'flex';
+              e.target.style.justifyContent = 'center';
+              e.target.style.alignItems = 'center';
+              e.target.style.color = '#fff';
+              e.target.style.fontWeight = 'bold';
+              e.target.style.fontSize = '18px';
+              e.target.innerText = 'Retry';
+            }}
           />
         </div>
       </div>
@@ -225,7 +307,6 @@ const styles = {
     alignItems: 'center',
     width: '212px',
     height: '100px',
-    backgroundImage: `url(${require('../../assets/images/game_box_next.png')})`,
   } as React.CSSProperties,
   nextCoinDiv: {
     width: `${CONST.WIDTH}px`,
@@ -253,7 +334,6 @@ const styles = {
     pointerEvents: 'auto',
     userSelect: 'element',
     cursor: 'pointer',
-    backgroundImage: `url(${require('../../assets/images/game_box_hold.png')})`,
     touchAction: 'manipulation',
   } as React.CSSProperties,
   holdCoin: {

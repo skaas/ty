@@ -1,13 +1,12 @@
 import { combineReducers } from 'redux';
-import { RootState } from './state';
-import { routerReducer, RouterState } from 'react-router-redux';
+import { routerReducer } from 'react-router-redux';
 import { gameReducer } from 'app/reducers/GameReducer';
 import { dialogReducer } from 'app/reducers/DialogReducer';
+import { RootState } from './state';
 
-export { RootState, RouterState };
-
-export const rootReducer = combineReducers<RootState>({
-  router: routerReducer as any,
-  game: gameReducer as any,
-  dialog: dialogReducer as any,
+// Create root reducer
+export const rootReducer = combineReducers({
+  router: routerReducer,
+  game: gameReducer,
+  dialog: dialogReducer
 });

@@ -188,3 +188,8 @@ export function mergePoint(value: CoinValue, count: number): { value: number, bo
     bonus: false,
   };
 }
+
+// 이미지 경로 관리를 위한 전역 상수 추가
+export const ASSETS_PATH = {
+  IMAGES: '/assets/images'
+};
