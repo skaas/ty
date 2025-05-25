@@ -1,7 +1,7 @@
 import { Store, createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import { History } from 'history';
-import { routerMiddleware } from 'react-router-redux';
+import { routerMiddleware } from 'connected-react-router';
 
 import { rootReducer } from 'app/reducers';
 import { storageMiddleware } from 'app/middleware';
@@ -31,7 +31,7 @@ export function configureStore(history: History): Store<any> {
 
   // Create store
   const store = createStore(
-    rootReducer,
+    rootReducer(history),
     applyMiddleware(...middlewares)
   );
 
@@ -39,7 +39,7 @@ export function configureStore(history: History): Store<any> {
   if (module.hot) {
     module.hot.accept('app/reducers', () => {
       const nextReducer = require('app/reducers').rootReducer;
-      store.replaceReducer(nextReducer);
+      store.replaceReducer(nextReducer(history));
     });
   }
 

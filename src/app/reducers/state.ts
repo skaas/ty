@@ -1,4 +1,4 @@
-import { RouterState } from 'react-router-redux';
+import { RouterState } from 'connected-react-router';
 import { CoinValue, Position, DialogState, AIThoughtEntry } from 'app/models';
 
 export interface RootState {
