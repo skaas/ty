@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
+import { connectRouter } from 'connected-react-router';
 import { gameReducer } from 'app/reducers/GameReducer';
 import { dialogReducer } from 'app/reducers/DialogReducer';
 import { RootState } from './state';
@@ -8,8 +8,8 @@ import { RootState } from './state';
 export { RootState };
 
 // Create root reducer
-export const rootReducer = combineReducers({
-  router: routerReducer,
+export const rootReducer = (history: any) => combineReducers({
+  router: connectRouter(history),
   game: gameReducer,
   dialog: dialogReducer
 });
