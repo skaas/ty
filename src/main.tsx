@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { configureStore } from 'app/store';
@@ -34,7 +34,8 @@ class Root extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <Root />,
-  document.getElementById('root')
-);
+const container = document.getElementById('root');
+if (container) {
+  const root = createRoot(container);
+  root.render(<Root />);
+}
