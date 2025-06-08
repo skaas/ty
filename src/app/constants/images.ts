@@ -1,27 +1,44 @@
-// 이미지 경로를 중앙에서 관리
-const IMAGES_PATH = '/assets/images';
+// 개별 이미지 파일을 불러와 중앙에서 관리
+import gameBoxHold from '../assets/images/game_box_hold.png';
+import gameBoxNext from '../assets/images/game_box_next.png';
+import mouseBtnRetry from '../assets/images/pause_btn_retry.png';
+import gameCoin1 from '../assets/images/game_coin_1.png';
+import gameCoin5 from '../assets/images/game_coin_5.png';
+import gameCoin10 from '../assets/images/game_coin_10.png';
+import gameCoin50 from '../assets/images/game_coin_50.png';
+import gameCoin100 from '../assets/images/game_coin_100.png';
+import gameCoin500 from '../assets/images/game_coin_500.png';
+import gameCoin1000 from '../assets/images/game_coin_1000.png';
+import gameCoinboxDown from '../assets/images/game_coinbox_down.png';
+import gameCoinboxLeft from '../assets/images/game_coinbox_left.png';
+import gameCoinboxRight from '../assets/images/game_coinbox_right.png';
+import gameCoinboxUp from '../assets/images/game_coinbox_up.png';
+import gameResultNew from '../assets/images/game_result_new.png';
+import gameBtnPlay from '../assets/images/game_btn_play.png';
+import gameBtnPause from '../assets/images/game_btn_pause.png';
+import mainBtnTwitter from '../assets/images/main_btn_twitter.png';
 
 export const IMAGES = {
-  GAME_BOX_HOLD: `${IMAGES_PATH}/game_box_hold.png`,
-  GAME_BOX_NEXT: `${IMAGES_PATH}/game_box_next.png`,
-  MOUSE_BTN_RETRY: `${IMAGES_PATH}/pause_btn_retry.png`,
-  GAME_COIN_1: `${IMAGES_PATH}/game_coin_1.png`,
-  GAME_COIN_5: `${IMAGES_PATH}/game_coin_5.png`,
-  GAME_COIN_10: `${IMAGES_PATH}/game_coin_10.png`,
-  GAME_COIN_50: `${IMAGES_PATH}/game_coin_50.png`,
-  GAME_COIN_100: `${IMAGES_PATH}/game_coin_100.png`,
-  GAME_COIN_500: `${IMAGES_PATH}/game_coin_500.png`,
-  GAME_COIN_1000: `${IMAGES_PATH}/game_coin_1000.png`,
-  GAME_COINBOX_DOWN: `${IMAGES_PATH}/game_coinbox_down.png`,
-  GAME_COINBOX_LEFT: `${IMAGES_PATH}/game_coinbox_left.png`,
-  GAME_COINBOX_RIGHT: `${IMAGES_PATH}/game_coinbox_right.png`,
-  GAME_COINBOX_UP: `${IMAGES_PATH}/game_coinbox_up.png`,
-  GAME_RESULT_NEW: `${IMAGES_PATH}/game_result_new.png`,
-  GAME_BTN_PLAY: `${IMAGES_PATH}/game_btn_play.png`,
-  GAME_BTN_PAUSE: `${IMAGES_PATH}/game_btn_pause.png`,
-  MAIN_BTN_TWITTER: `${IMAGES_PATH}/main_btn_twitter.png`,
+  GAME_BOX_HOLD: gameBoxHold,
+  GAME_BOX_NEXT: gameBoxNext,
+  MOUSE_BTN_RETRY: mouseBtnRetry,
+  GAME_COIN_1: gameCoin1,
+  GAME_COIN_5: gameCoin5,
+  GAME_COIN_10: gameCoin10,
+  GAME_COIN_50: gameCoin50,
+  GAME_COIN_100: gameCoin100,
+  GAME_COIN_500: gameCoin500,
+  GAME_COIN_1000: gameCoin1000,
+  GAME_COINBOX_DOWN: gameCoinboxDown,
+  GAME_COINBOX_LEFT: gameCoinboxLeft,
+  GAME_COINBOX_RIGHT: gameCoinboxRight,
+  GAME_COINBOX_UP: gameCoinboxUp,
+  GAME_RESULT_NEW: gameResultNew,
+  GAME_BTN_PLAY: gameBtnPlay,
+  GAME_BTN_PAUSE: gameBtnPause,
+  MAIN_BTN_TWITTER: mainBtnTwitter,
   // 기타 이미지들...
-}; 
+};
 
 // 코인 이미지를 숫자 값으로 쉽게 접근할 수 있는 헬퍼 함수
 export function getCoinImage(value: number): string {

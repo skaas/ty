@@ -1,22 +1,5 @@
 import * as React from 'react';
-// 이미지 경로 수정
-import gameBoxHold from '../../assets/images/game_box_hold.png';
-import gameBoxNext from '../../assets/images/game_box_next.png';
-import mouseBtnRetry from '../../assets/images/pause_btn_retry.png';
-import gameCoin from '../../assets/images/game_coin_1.png';
-
-// JSX에서 사용
-<img src={gameBoxHold} alt="Box Hold" />
-
-// 방법 2: require 사용
-<img src={require('../../assets/images/game_box_hold.png')} alt="Box Hold" />
-
-// GitHub Raw URL 사용
-const gameBoxHold = 'https://raw.githubusercontent.com/username/repo/main/images/game_box_hold.png';
-const gameBoxNext = 'https://raw.githubusercontent.com/username/repo/main/images/game_box_next.png';
-
-// JSX에서 사용
-<img src={gameBoxHold} alt="Box Hold" />
+import { IMAGES } from 'app/constants/images';
 
 export interface GameProps {
   // 필요한 props 정의
@@ -59,7 +42,7 @@ export class Game extends React.Component<GameProps, GameState> {
         <div className="game-board">
           {/* 상단 영역 (다음 블록 표시) */}
           <div className="next-block-area">
-            <img src={gameBoxNext} alt="Next Block" />
+            <img src={IMAGES.GAME_BOX_NEXT} alt="Next Block" />
             {/* 다음 블록 내용 */}
           </div>
           
@@ -71,13 +54,13 @@ export class Game extends React.Component<GameProps, GameState> {
           
           {/* 현재 블록 영역 */}
           <div className="current-block">
-            <img src={gameBoxHold} alt="Current Block" />
+            <img src={IMAGES.GAME_BOX_HOLD} alt="Current Block" />
             {/* 현재 블록 내용 */}
           </div>
           
           {/* 재시작 버튼 */}
           <div className="retry-button">
-            <img src={mouseBtnRetry} alt="Retry" onClick={this.handleRetry} />
+            <img src={IMAGES.MOUSE_BTN_RETRY} alt="Retry" onClick={this.handleRetry} />
           </div>
         </div>
       </div>

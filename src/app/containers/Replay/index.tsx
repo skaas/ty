@@ -18,6 +18,7 @@ import {
   mergePoint,
   S3_HOST,
 } from 'app/utils';
+import { IMAGES } from 'app/constants/images';
 
 export namespace App {
   interface RouteParam {
@@ -91,8 +92,8 @@ export class App extends React.Component<App.Props, App.State> {
           coins={this.props.game.candidates}
           savedCoin={this.props.game.savedCoin}
           image={this.state.autoPlay ?
-            require('../../../assets/images/game_btn_pause.png') :
-            require('../../../assets/images/game_btn_play.png')}
+            IMAGES.GAME_BTN_PAUSE :
+            IMAGES.GAME_BTN_PLAY}
           onSaveClick={() => {}}
           onImageClick={() => { this.toggleAutoPlay(); }}
         />
