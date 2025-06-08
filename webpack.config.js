@@ -10,6 +10,7 @@ var outPath = path.join(__dirname, './dist');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   context: sourcePath,
@@ -109,6 +110,11 @@ module.exports = {
       filename: '[contenthash].css',
       disable: !isProduction
     }),
+    new CopyWebpackPlugin([
+      { from: path.resolve(__dirname, 'public/assets'), to: 'assets' },
+      { from: path.resolve(__dirname, 'src/assets/font'), to: 'assets/font' },
+      { from: path.resolve(__dirname, 'src/assets/images'), to: 'assets/images' }
+    ]),
     new HtmlWebpackPlugin({
       template: 'assets/index.html'
     })
