@@ -4,7 +4,7 @@ import { Directions } from 'app/models';
 import { CONST } from 'app/utils';
 import { IMAGES } from 'app/constants/images';
 
-const Img = require('react-image').default;
+import Img from 'react-image';
 
 export namespace GameCoinBox {
   export interface Props {
