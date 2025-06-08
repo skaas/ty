@@ -20,7 +20,6 @@ import {
   CONST,
   Storage,
   mergePoint,
-  S3_HOST,
 } from 'app/utils';
 import { IMAGES } from 'app/constants/images';
 import * as ga from 'app/utils/ga';

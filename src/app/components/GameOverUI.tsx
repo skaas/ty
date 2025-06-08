@@ -2,7 +2,7 @@ import * as React from 'react';
 
 const Clipboard = require('react-clipboard.js').default;
 
-import { CONST, S3_HOST } from 'app/utils';
+import { CONST } from 'app/utils';
 
 export namespace GameOverUI {
   export interface Props {

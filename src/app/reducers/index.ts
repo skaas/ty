@@ -9,7 +9,7 @@ export { RootState };
 
 // Create root reducer
 export const rootReducer = (history: any) => combineReducers({
-  router: connectRouter(history),
-  game: gameReducer,
-  dialog: dialogReducer
+  router: connectRouter(history) as any,
+  game: gameReducer as any,
+  dialog: dialogReducer as any
 });
