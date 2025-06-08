@@ -54,7 +54,7 @@ export class BonusBoard extends React.Component<BonusBoard.Props, BonusBoard.Sta
     );
   }
 
-  public async bonuseAnimation(
+  public async bonusAnimation(
     pos: Position,
     bonusText: string,
     delay: number = 100): Promise<void> {

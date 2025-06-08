@@ -151,7 +151,7 @@ export class App extends React.Component<App.Props, App.State> {
                 this.gameBoard.startMoveAnimation();
               }
               if (this.bonusBoard != null) {
-                this.bonusBoard.bonuseAnimation(pos, `+${nextCoin}`);
+                this.bonusBoard.bonusAnimation(pos, `+${nextCoin}`);
               }
             }
           }}
@@ -262,7 +262,7 @@ export class App extends React.Component<App.Props, App.State> {
     const nextCoin = this.props.game.candidates[0];
     this.props.actions.addCoin({ pos });
     if (this.bonusBoard != null) {
-      this.bonusBoard.bonuseAnimation(pos, `+${nextCoin}`);
+      this.bonusBoard.bonusAnimation(pos, `+${nextCoin}`);
     }
     if (this.nextCoins != null) {
       this.nextCoins.startMoveAnimation();
@@ -320,9 +320,9 @@ export class App extends React.Component<App.Props, App.State> {
       });
       if (this.bonusBoard != null) {
         if (mergedPoint.bonus) {
-          this.bonusBoard.bonuseAnimation(lastPos, `+${mergedPoint.value}`);
+          this.bonusBoard.bonusAnimation(lastPos, `+${mergedPoint.value}`);
         } else {
-          this.bonusBoard.bonuseAnimation(lastPos, `+${mergedValue}`);
+          this.bonusBoard.bonusAnimation(lastPos, `+${mergedValue}`);
         }
       }
     } else {
@@ -384,7 +384,7 @@ export class App extends React.Component<App.Props, App.State> {
 
     for (const bonus of bonuses) {
       if (this.bonusBoard != null) {
-        this.bonusBoard.bonuseAnimation(bonus.pos, `+${bonus.value} x${bonus.count}`, -1);
+        this.bonusBoard.bonusAnimation(bonus.pos, `+${bonus.value} x${bonus.count}`, -1);
       }
       const timer = new Promise((resolve, reject) => setTimeout(resolve, 150));
       await timer;
