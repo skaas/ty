@@ -16,10 +16,10 @@ $ npm start
 $ npm run build
 ```
 
-## Prettier
+## Lint
 
 ```
-$ npm run prettier
+$ npm run lint
 ```
 
 # License
