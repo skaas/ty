@@ -26,8 +26,8 @@ export class Dialog extends React.Component<Dialog.Props, Dialog.State> {
         }}
         onClick={() => {}}
       >
-        <div style={styles.dialog}>
-          <div style={styles.title}>{this.props.dialog.title}</div>
+        <div style={styles.dialog} role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+          <div id="dialog-title" style={styles.title}>{this.props.dialog.title}</div>
           <div style={styles.msg}>
             <div style={styles.msgContent}>
               {this.props.dialog.msg}

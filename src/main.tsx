@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { configureStore } from 'app/store';
 import { App } from './app';
-import { initGA } from 'app/utils/ga';
 import { createBrowserHistory } from 'history';
 
 // prepare debug options
@@ -18,8 +17,6 @@ if (process.env.NODE_ENV !== 'production') {
 // prepare store and history
 const history = createBrowserHistory();
 const store = configureStore(history);
-
-initGA();
 
 // Create a class-based Provider to avoid the warning
 class Root extends React.Component {
