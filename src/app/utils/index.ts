@@ -125,25 +125,25 @@ export function getSameAdjacentCoinsWithValue(
   // up
   if (row > 0 && coins[row - 1][col] === value) {
     const pos = { col, row: row - 1 };
-    result = result.concat(getSameAdjacentCoins(pos, coins));
+    result = result.concat(getSameAdjacentCoinsWithValue(pos, value, coins));
   }
 
   // down
   if (row < CONST.GAME_SIZE - 1 && coins[row + 1][col] === value) {
     const pos = { col, row: row + 1 };
-    result = result.concat(getSameAdjacentCoins(pos, coins));
+    result = result.concat(getSameAdjacentCoinsWithValue(pos, value, coins));
   }
 
   // left
   if (col > 0 && coins[row][col - 1] === value) {
     const pos = { row, col: col - 1 };
-    result = result.concat(getSameAdjacentCoins(pos, coins));
+    result = result.concat(getSameAdjacentCoinsWithValue(pos, value, coins));
   }
 
   // right
   if (col < CONST.GAME_SIZE - 1 && coins[row][col + 1] === value) {
     const pos = { row, col: col + 1 };
-    result = result.concat(getSameAdjacentCoins(pos, coins));
+    result = result.concat(getSameAdjacentCoinsWithValue(pos, value, coins));
   }
 
   return result;
