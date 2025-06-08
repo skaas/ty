@@ -23,7 +23,6 @@ import {
   S3_HOST,
 } from 'app/utils';
 import { IMAGES } from 'app/constants/images';
-import * as ga from 'app/utils/ga';
 import { BonusBoard } from 'app/components/BonusBoard';
 
 export namespace App {
@@ -100,7 +99,6 @@ export class App extends React.Component<App.Props, App.State> {
   }
 
   componentDidMount(): void {
-    ga.onGameStart();
     this.props.actions.initGame({ isReplay: false });
   }
 
@@ -189,8 +187,6 @@ export class App extends React.Component<App.Props, App.State> {
           score={this.props.game.score}
           bestScore={Storage.getBestScore()}
           onRetryClick={() => {
-            ga.onRestart(this.props.game);
-
             this.bonusPlayed = false;
             this.props.actions.resetGame();
             this.props.actions.initGame({ isReplay: false });
@@ -201,7 +197,6 @@ export class App extends React.Component<App.Props, App.State> {
               gameOver: false,
               showAIThoughts: this.state.showAIThoughts
             });
-            ga.onGameStart();
           }}
           getShareLink={() => { return this.getSharedLink(); }}
         />
@@ -216,8 +211,6 @@ export class App extends React.Component<App.Props, App.State> {
       confirmMsg: 'OK',
       cancelMsg: 'NO',
       onConfirm: () => {
-        ga.onRetry(this.props.game);
-
         this.props.actions.resetGame();
         this.props.actions.closeDialog();
         if (this.bonusBoard != null) {
@@ -299,7 +292,6 @@ export class App extends React.Component<App.Props, App.State> {
           this.props.actions.addBonus({ bonuses });
         }
         this.props.actions.gameOver();
-        ga.onGameEnd(this.props.game);
       }
       this.setState({
         gameOver: true,
