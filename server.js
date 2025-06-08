@@ -3,15 +3,15 @@ const path = require('path');
 const port = process.env.PORT || 8080;
 const app = express();
 
-app.use(express.static(__dirname + '/dist'))
-
-app.get('/assets/**/:file', function(request, response) {
-  response.sendFile(path.resolve(__dirname, 'src/' + request.path));
-});
+// Serve built files
+app.use(express.static(path.join(__dirname, 'dist')));
+// Serve static assets such as images and fonts
+app.use('/assets', express.static(path.join(__dirname, 'src/assets')));
 
 app.get('*', function(request, response) {
   response.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
-})
+});
 
-app.listen(port, '0.0.0.0')
-console.log("server started on port " + port);
+app.listen(port, '0.0.0.0');
+console.log('server started on port ' + port);
+
