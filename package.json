@@ -24,6 +24,7 @@
     "@types/webpack-env": "1.13.6",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
+    "copy-webpack-plugin": "^5.1.2",
     "css-loader": "^0.28.11",
     "file-loader": "^1.1.11",
     "html-loader": "^1.0.0-alpha.0",
