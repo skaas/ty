@@ -36,7 +36,6 @@
     "postcss-loader": "^2.1.5",
     "postcss-reporter": "^5.0.0",
     "postcss-url": "^7.3.2",
-    "react-hot-loader": "^4.13.1",
     "redux-devtools-extension": "^2.13.2",
     "style-loader": "^0.21.0",
     "ts-loader": "^4.4.1",
