@@ -1,22 +1,7 @@
 import * as React from 'react';
-// 이미지 경로 수정
 import gameBoxHold from '../../assets/images/game_box_hold.png';
 import gameBoxNext from '../../assets/images/game_box_next.png';
 import mouseBtnRetry from '../../assets/images/pause_btn_retry.png';
-import gameCoin from '../../assets/images/game_coin_1.png';
-
-// JSX에서 사용
-<img src={gameBoxHold} alt="Box Hold" />
-
-// 방법 2: require 사용
-<img src={require('../../assets/images/game_box_hold.png')} alt="Box Hold" />
-
-// GitHub Raw URL 사용
-const gameBoxHold = 'https://raw.githubusercontent.com/username/repo/main/images/game_box_hold.png';
-const gameBoxNext = 'https://raw.githubusercontent.com/username/repo/main/images/game_box_next.png';
-
-// JSX에서 사용
-<img src={gameBoxHold} alt="Box Hold" />
 
 export interface GameProps {
   // 필요한 props 정의
