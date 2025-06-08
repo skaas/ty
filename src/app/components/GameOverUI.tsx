@@ -3,6 +3,7 @@ import * as React from 'react';
 const Clipboard = require('react-clipboard.js').default;
 
 import { CONST, S3_HOST } from 'app/utils';
+import { IMAGES } from 'app/constants/images';
 
 export namespace GameOverUI {
   export interface Props {
@@ -49,7 +50,7 @@ export class GameOverUI extends React.Component<GameOverUI.Props, GameOverUI.Sta
             {
               this.isNewRecord() && <img
                 style={styles.newRecord}
-                src={require('../../assets/images/game_result_new.png')}
+                src={IMAGES.GAME_RESULT_NEW}
               />
             }
           </div>
@@ -69,7 +70,7 @@ export class GameOverUI extends React.Component<GameOverUI.Props, GameOverUI.Sta
           >
               <img
                 style={styles.image}
-                src={require('../../assets/images/main_btn_twitter.png')}
+                src={IMAGES.MAIN_BTN_TWITTER}
               />
           </Clipboard>
         </div>
@@ -85,7 +86,7 @@ export class GameOverUI extends React.Component<GameOverUI.Props, GameOverUI.Sta
           >
             <img
               style={styles.image}
-              src={require('../../assets/images/pause_btn_retry.png')}
+              src={IMAGES.MOUSE_BTN_RETRY}
             />
           </div>
         </div>
