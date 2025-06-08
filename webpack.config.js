@@ -10,6 +10,8 @@ var outPath = path.join(__dirname, './dist');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
+var ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+var ReactRefreshTypeScript = require('react-refresh-typescript');
 
 module.exports = {
   context: sourcePath,
@@ -40,7 +42,10 @@ module.exports = {
         use: {
           loader: 'ts-loader',
           options: {
-            transpileOnly: true
+            transpileOnly: true,
+            getCustomTransformers: () => ({
+              before: !isProduction ? [ReactRefreshTypeScript()] : []
+            })
           }
         },
         exclude: /node_modules/
@@ -104,6 +109,7 @@ module.exports = {
       NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
       DEBUG: false
     }),
+    new ReactRefreshWebpackPlugin({ disable: isProduction }),
     new WebpackCleanupPlugin(),
     new MiniCssExtractPlugin({
       filename: '[contenthash].css',
