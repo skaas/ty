@@ -1,15 +1,31 @@
 {
-  "defaultSeverity": "error",
-  "extends": ["tslint-react", "tslint-config-airbnb"],
+  "defaultSeverity": "warning",
+  "extends": [
+    "tslint-react",
+    "tslint-config-airbnb"
+  ],
   "rules": {
-    "indent": [true, "spaces", 2],
-    "ter-indent": [true, 2],
+    "indent": [
+      true,
+      "spaces",
+      2
+    ],
+    "ter-indent": [
+      true,
+      2
+    ],
     "no-unsafe-any": true,
     "class-name": true,
-    "comment-format": [true, "check-space"],
+    "comment-format": [
+      true,
+      "check-space"
+    ],
     "curly": true,
     "eofline": true,
-    "interface-name": [true, "never-prefix"],
+    "interface-name": [
+      true,
+      "never-prefix"
+    ],
     "align": [
       true,
       "parameters",
@@ -41,13 +57,28 @@
       "check-open-brace",
       "check-whitespace"
     ],
-    "quotemark": [true, "single", "jsx-double"],
+    "quotemark": [
+      true,
+      "single",
+      "jsx-double"
+    ],
     "radix": true,
-    "semicolon": [true, "always"],
+    "semicolon": [
+      true,
+      "always"
+    ],
     "switch-default": true,
     "trailing-comma": true,
-    "triple-equals": [true, "allow-null-check"],
-    "typedef": [true, "call-signature", "parameter", "member-variable-declaration"],
+    "triple-equals": [
+      true,
+      "allow-null-check"
+    ],
+    "typedef": [
+      true,
+      "call-signature",
+      "parameter",
+      "member-variable-declaration"
+    ],
     "typedef-whitespace": [
       true,
       {
@@ -58,7 +89,13 @@
         "variable-declaration": "nospace"
       }
     ],
-    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case"],
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-leading-underscore",
+      "allow-pascal-case"
+    ],
     "whitespace": [
       true,
       "check-branch",

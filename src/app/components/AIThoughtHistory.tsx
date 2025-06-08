@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { AIThoughtEntry, CoinValue } from 'app/models';
 import { IMAGES } from 'app/constants/images';
-import { CONST } from 'app/utils';
 
 export namespace AIThoughtHistory {
   export interface Props {

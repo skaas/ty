@@ -1,7 +1,6 @@
 import { Storage } from 'app/utils/storage';
 import { CoinValue, Position, NextCoinType } from 'app/models';
 
-export const S3_HOST: string = '';
 
 export class CONST {
   public static WIDTH: number = 480;

@@ -16,7 +16,6 @@ import {
   CONST,
   GameStepEncoding,
   mergePoint,
-  S3_HOST,
 } from 'app/utils';
 
 export namespace App {
@@ -136,7 +135,7 @@ export class App extends React.Component<App.Props, App.State> {
         this.gameBoard.startMoveAnimation();
       }
 
-      await new Promise((resolve) => {
+      await new Promise<void>((resolve) => {
         setTimeout(() => { resolve(); }, 150);
       });
 
@@ -158,7 +157,7 @@ export class App extends React.Component<App.Props, App.State> {
         }
       }
 
-      await new Promise((resolve) => {
+      await new Promise<void>((resolve) => {
         setTimeout(() => { resolve(); }, 150);
       });
 
@@ -177,7 +176,7 @@ export class App extends React.Component<App.Props, App.State> {
       }
     }
 
-    await new Promise((resolve) => {
+    await new Promise<void>((resolve) => {
       setTimeout(() => { resolve(); }, 100);
     });
 
@@ -186,7 +185,7 @@ export class App extends React.Component<App.Props, App.State> {
       merged = await this.tryMerge();
     }
 
-    await new Promise((resolve) => {
+    await new Promise<void>((resolve) => {
       setTimeout(() => { resolve(); }, 200);
     });
 

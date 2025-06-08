@@ -1,7 +1,7 @@
 export class AnimationLoop {
   private animationId: number | null = null;
   private animationTime: number | null = null;
-  private resolve: (() => void) | null = null;
+  private resolve: ((value?: unknown) => void) | null = null;
   private loop: (delta: number) => void;
   private duration: number;
 
